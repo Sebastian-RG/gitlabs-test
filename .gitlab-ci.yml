@@ -1,5 +1,9 @@
 stages:
   - build
+  - test
+
+include:
+  - template: Code-Quality.gitlab-ci.yml
 
 build-docker-image:
   image: docker:latest
@@ -24,3 +28,9 @@ build-docker-image:
       fi
     - docker build --pull -t "$CI_REGISTRY_IMAGE${tag}" .
     - docker push "$CI_REGISTRY_IMAGE${tag}"
+
+run-tests:
+  image: python:latest
+  stage: test
+  script:
+    - echo "These are tests"
